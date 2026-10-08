@@ -110,7 +110,24 @@
                           id="descricao"
                           name="descricao"
                           rows="4"
-                          placeholder="Descreva a situação encontrada..."></textarea>
+                          maxlength="2000"
+                          placeholder="Descreva a situação encontrada..."
+                            oninput="atualizarContador"
+                >
+                    <p id="contador">2000 caracteres restantes</p>
+
+                </textarea>
+                <script>
+                    function atualizarContador() {
+                      const campo = document.getElementById('descricao');
+                      const contador = document.getElementById('contador');
+                      const limite = campo.getAttribute('maxlength');
+                      const digitados = campo.value.length;
+                      const restantes = limite - digitados;
+
+                      contador.textContent = `${restantes} caracteres restantes`;
+                    }
+                </script>
 
             </div>
 

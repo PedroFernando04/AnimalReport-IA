@@ -184,7 +184,6 @@ Q-001 a Q-010 são as questões do SPEC-01. Q-011 a Q-014 surgiram da leitura do
 - **Q-011:** O DTO atual exige descrição (`@NotBlank`), então uma descrição vazia nunca chega à classificação pelo formulário. Manter a obrigatoriedade (CA-004 vale para textos sem conteúdo útil) ou aceitar descrição vazia? — **Responsável:** PO e grupo — **Prazo:** antes de aprovar a spec
 - **Q-012:** Se a reclassificação na edição falhar e as regras forem inconclusivas, manter o nível anterior com revisão manual ou aplicar o nível padrão? — **Responsável:** PO — **Prazo:** antes de aprovar a spec
 - **Q-013:** Denúncias do `/urgente` ficam com origem em branco (tratadas como `USUARIO` nas telas) ou ganham uma origem própria, por exemplo "fixa"? — **Responsável:** PO e grupo — **Prazo:** antes do plano
-- **Q-014:** Qual o tamanho máximo da descrição enviada e como truncar sem perder a informação decisiva? Proposta: 2000 caracteres, mantendo início e fim. — **Responsável:** grupo, com PO — **Prazo:** antes do plano
 
 ## Decisões confirmadas
 
