@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Exibe a mensagem de erro (atributo flash "erro") definida pelo GlobalExceptionHandler -->
+<div th:fragment="alerta"
+     th:if="${erro != null}"
+     class="alert alert-danger alert-dismissible shadow"
+     role="alert"
+     style="position: fixed; top: 90px; left: 50%; transform: translateX(-50%);
+            z-index: 1040; width: min(92vw, 560px);">
+
+    <span th:text="${erro}"></span>
+
+    <button type="button"
+            class="btn-close"
+            aria-label="Fechar"
+            onclick="this.parentElement.remove()"></button>
+</div>
+
+</body>
+</html>

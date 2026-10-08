@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>AR - Detalhes da Adoção</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="~{fragments/alerta :: alerta}"></div>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<div class="page-wrapper">
+
+    <main class="page-content">
+
+        <section class="status-page">
+
+            <!-- BOTÃO VOLTAR -->
+            <div class="mb-4">
+
+                <button type="button"
+                        onclick="history.back()"
+                        class="app-btn-outline">
+
+                    ← Voltar para Lista
+
+                </button>
+
+            </div>
+
+            <!-- CARD PRINCIPAL -->
+            <div class="form-page-card"
+                 style="max-width: 1200px;">
+
+                <!-- HEADER -->
+                <div class="status-header mb-5">
+
+                    <h1 class="status-title mb-2">
+                        Detalhes da Adoção
+                    </h1>
+
+                    <p class="status-subtitle">
+                        Informações completas do animal disponível para adoção.
+                    </p>
+
+                </div>
+
+                <!-- CONTEÚDO -->
+                <div class="row g-5 align-items-start">
+
+                    <!-- IMAGEM -->
+                    <div class="col-lg-5">
+
+                        <div th:if="${adocao.imagemUrl != null}"
+                             class="w-100">
+
+                            <img th:src="${adocao.imagemUrl}"
+                                 class="img-fluid rounded-4 shadow-lg w-100"
+                                 alt="Foto do Animal"
+
+                                 style="
+                                    max-height: 620px;
+                                    object-fit: cover;
+                                    border: 1px solid rgba(255,255,255,0.08);
+                                 ">
+
+                        </div>
+
+                    </div>
+
+                    <!-- INFORMAÇÕES -->
+                    <div class="col-lg-7">
+
+                        <!-- CARD INFO -->
+                        <div class="status-card p-4 mb-4">
+
+                            <h3 class="section-title mb-4">
+                                Informações do Animal
+                            </h3>
+
+                            <div class="row g-4">
+
+                                <!-- TIPO -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label-custom">
+                                        Tipo
+                                    </label>
+
+                                    <div class="form-control-custom">
+
+                                        <span th:text="${adocao.tipoAnimal.descricao}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- NOME -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label-custom">
+                                        Nome provisório
+                                    </label>
+
+                                    <div class="form-control-custom">
+
+                                        <span th:text="${adocao.nomeAnimal}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- IDADE -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label-custom">
+                                        Idade estimada
+                                    </label>
+
+                                    <div class="form-control-custom">
+
+                                        <span th:text="${adocao.idadeEstimada}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- STATUS -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label-custom">
+                                        Status
+                                    </label>
+
+                                    <div class="form-control-custom">
+
+                                        <span th:text="${adocao.statusAdocao.descricao}"
+                                              class="fw-bold"
+
+                                              th:classappend="${adocao.statusAdocao.name() == 'RETIRADA' ? 'text-danger' :
+                                              (adocao.statusAdocao.name() == 'AGUARDANDO' ? 'text-warning' :
+                                              (adocao.statusAdocao.name() == 'CONCLUIDA' ? 'text-success' :
+                                              'text-info'))}">
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- DESCRIÇÃO -->
+                                <div class="col-12">
+
+                                    <label class="form-label-custom">
+                                        Descrição
+                                    </label>
+
+                                    <div class="form-control-custom"
+                                         style="min-height: 180px;">
+
+                                        <p class="mb-0 text-white"
+                                           th:text="${adocao.descricao}">
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BOTÃO CONTATO -->
+                        <div class="d-grid">
+
+                            <button class="form-main-btn"
+                                    type="button"
+
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#areaContato"
+
+                                    aria-expanded="false"
+                                    aria-controls="areaContato">
+
+                                Entrar em contato
+
+                            </button>
+
+                        </div>
+
+                        <!-- ÁREA CONTATO -->
+                        <div class="collapse mt-4"
+                             id="areaContato">
+
+                            <div class="status-card p-4 text-center">
+
+                                <h4 class="section-title mb-3">
+                                    Contato
+                                </h4>
+
+                                <p class="mb-0 fs-4 fw-bold text-white"
+                                   th:text="${adocao.contato}">
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>AR - Cadastro Organização</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="body_login">
+<div th:replace="~{fragments/alerta :: alerta}"></div>
+
+<div class="login-card">
+
+    <div class="nav-cadastro">
+        <img class="logo_img"
+             th:src="@{/images/image-removebg-preview.png}"
+             alt="Logo"/>
+
+        <h2>Animal Report</h2>
+    </div>
+
+    <h2 class="text-center mb-4">
+        Registrar - Organização
+    </h2>
+
+    <div class="auth-switch-group">
+
+        <a th:href="@{/registrar}"
+           th:classappend="${requestURI == '/registrar'} ? 'active' : ''"
+           class="btn btn-outline-primary auth-switch-btn">
+            Usuário
+        </a>
+
+        <a th:href="@{/registrarOrg}"
+           th:classappend="${requestURI == '/registrarOrg'} ? 'active' : ''"
+           class="btn btn-outline-primary auth-switch-btn">
+            Organização
+        </a>
+
+    </div>
+
+    <form class="form_login"
+          th:action="@{/registrarOrg}"
+          method="POST">
+
+        <div class="mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="nome"
+                   name="nome"
+                   placeholder="Nome"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   name="email"
+                   placeholder="Email"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+            <input type="tel"
+                   class="form-control"
+                   id="telefone"
+                   name="telefone"
+                   placeholder="(XX) XXXXX-XXXX"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="cnpj"
+                   name="cnpj"
+                   placeholder="CNPJ"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+            <input type="text"
+                   class="form-control"
+                   id="inscricaoEstadual"
+                   name="inscricaoEstadual"
+                   placeholder="Inscrição Estadual"
+                   required/>
+        </div>
+
+        <div class="mb-3">
+
+            <label for="tipoOrg"
+                   class="form-label">
+                Tipo de Organização
+            </label>
+
+            <select class="form-select"
+                    id="tipoOrg"
+                    name="tipoOrg"
+                    required>
+
+                <option value="" selected>
+                    Selecione o tipo...
+                </option>
+
+                <option th:each="tipo : ${T(com.example.AminalReport.entities.enums.EnumTipoOrg).values()}"
+                        th:value="${tipo}"
+                        th:text="${tipo.descricao}">
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="input-group mb-3">
+
+            <input type="password"
+                   class="form-control"
+                   id="senha"
+                   name="senha"
+                   placeholder="Senha"
+                   required/>
+
+            <button class="btn btn-outline-secondary"
+                    type="button"
+                    id="togglePassword1">
+
+                <i class="bi bi-eye"></i>
+            </button>
+
+        </div>
+
+        <div class="input-group mb-3">
+
+            <input type="password"
+                   class="form-control"
+                   id="confirmar_senha"
+                   name="confirmarSenha"
+                   placeholder="Confirmar senha"
+                   required/>
+
+            <button class="btn btn-outline-secondary"
+                    type="button"
+                    id="togglePassword2">
+
+                <i class="bi bi-eye"></i>
+            </button>
+
+        </div>
+
+        <p class="msg_senha">
+            <i class="bi bi-asterisk"></i>
+            Sua senha precisa ter no mínimo 8 caracteres com ao menos 1 maiúsculo.
+        </p>
+
+        <button type="submit"
+                class="form-main-btn w-100">
+            Cadastrar
+        </button>
+
+    </form>
+
+    <div class="text-center my-4">
+        <span class="text-secondary">────────</span>
+        <span class="mx-2">ou</span>
+        <span class="text-secondary">────────</span>
+    </div>
+
+    <div class="d-flex justify-content-center mt-2">
+
+        <div class="rounded-circle-apps bg-white p-2 mx-2">
+            <img th:src="@{/images/google-icon-isolated-white-background_1273375-828.avif}"
+                 alt="Google"
+                 class="rounded-circle-apps"/>
+        </div>
+
+        <div class="rounded-circle-apps bg-white p-2 mx-2">
+            <img th:src="@{/images/logotipo-do-facebook-em-um-circulo-azul_705838-12823.avif}"
+                 alt="Facebook"
+                 class="rounded-circle-apps"/>
+        </div>
+
+        <div class="rounded-circle-apps bg-white p-2 mx-2">
+            <img th:src="@{/images/apple.png}"
+                 alt="Apple"
+                 class="rounded-circle-apps"/>
+        </div>
+
+    </div>
+
+    <div class="msg_botton text-center">
+        <span>Já tem uma conta? </span>
+
+        <a th:href="@{/login}"
+           class="msg_senha">
+            Entrar
+        </a>
+    </div>
+
+    <div class="text-center">
+        <a class="msg_senha"
+           th:href="@{/home}">
+            Entrar como visitante
+        </a>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script th:src="@{/js/mask.js}"></script>
+
+</body>
+</html>

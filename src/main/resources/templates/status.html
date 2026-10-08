@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AR - Status</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body class="page-wrapper">
+<div th:replace="~{fragments/alerta :: alerta}"></div>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="page-content">
+
+    <section class="status-page">
+
+        <div class="status-header">
+
+            <h1 class="status-title">
+                Suas Denúncias
+            </h1>
+
+            <p class="status-subtitle">
+                Acompanhe o andamento das denúncias realizadas.
+            </p>
+
+        </div>
+
+        <div class="status-card">
+
+            <div th:if="${denuncias.isEmpty()}"
+                 class="alert alert-secondary text-center mb-0">
+
+                Nenhuma denúncia registrada ainda.
+
+            </div>
+
+            <div class="table-responsive"
+                 th:unless="${denuncias.isEmpty()}">
+
+                <table class="table status-table align-middle mb-0">
+
+                    <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Cidade</th>
+                        <th>Bairro</th>
+                        <th>Tipo</th>
+                        <th>Urgência</th>
+                        <th>Status</th>
+
+                        <th th:if="${usuarioLogado != null}">
+                            Ações
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="denuncia : ${denuncias}">
+
+                        <td th:text="${denuncia.estado}"></td>
+
+                        <td th:text="${denuncia.municipio}"></td>
+
+                        <td th:text="${denuncia.bairro}"></td>
+
+                        <td th:text="${denuncia.tipoAnimal.descricao}"></td>
+
+                        <td>
+
+                            <span
+                                    th:text="${denuncia.urgencia.descricao}"
+                                    class="fw-semibold"
+
+                                    th:classappend="
+                                    ${denuncia.urgencia.name() == 'EMERGENCIA'} ? ' text-danger' :
+                                    (${denuncia.urgencia.name() == 'MUITO_URGENTE'} ? ' text-warning' :
+                                    (${denuncia.urgencia.name() == 'URGENTE'} ? ' text-warning' :
+                                    (${denuncia.urgencia.name() == 'POUCO_URGENTE'} ? ' text-success' :
+                                    ' text-info')))
+                                ">
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                    th:text="${denuncia.andamentoDenuncia.descricao}"
+
+                                    class="fw-semibold"
+
+                                    th:classappend="
+                                    ${denuncia.andamentoDenuncia.name() == 'AGUARDANDO'} ? ' text-warning' :
+                                    (${denuncia.andamentoDenuncia.name() == 'EM_ANALISE'} ? ' text-info' :
+                                    (${denuncia.andamentoDenuncia.name() == 'CONCLUIDA'} ? ' text-success' :
+                                    (${denuncia.andamentoDenuncia.name() == 'REPROVADA'} ? ' text-danger' :
+                                    ' text-light')))
+                                ">
+                            </span>
+
+                        </td>
+
+                        <td th:if="${usuarioLogado != null}">
+
+                            <div class="status-actions">
+
+                                <a th:href="@{/status/detalhe/{id}(id=${denuncia.id})}"
+                                   class="btn-status-primary">
+
+                                    Ver mais
+
+                                </a>
+
+                                <a th:href="@{/status/editar/{id}(id=${denuncia.id})}"
+                                   class="btn-status-warning"
+                                th:if="${usuarioLogado.tipoUsuario == 'Comum'}">
+
+                                    Alterar
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

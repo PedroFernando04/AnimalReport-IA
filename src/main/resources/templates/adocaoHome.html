@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>AR - Animais para Adoção</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+<div th:replace="~{fragments/alerta :: alerta}"></div>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<div class="page-wrapper">
+
+    <main class="page-content">
+
+        <section class="status-page">
+
+            <!-- HEADER -->
+            <div class="status-header">
+
+                <h1 class="status-title">
+                    Animais para adoção
+                </h1>
+
+                <p class="status-subtitle">
+                    Encontre um novo amigo esperando por um lar.
+                </p>
+
+            </div>
+
+            <!-- GRID -->
+            <div class="cards-grid-adocao">
+
+                <div class="card-animal"
+
+                     th:each="a : ${listaAdocao}"
+
+                     th:if="${a.statusAdocao.name() == 'AGUARDANDO'}">
+
+                    <!-- FOTO -->
+                    <div class="foto-moldura">
+
+                        <img th:if="${a.foto != null}"
+                             th:src="@{'/uploads/' + ${a.foto}}"
+                             class="detail-image"
+                             alt="Foto do Animal">
+
+                        <img th:unless="${a.foto != null}"
+                             th:src="@{/images/sem-foto.jpg}"
+                             class="detail-image"
+                             alt="Sem foto">
+
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="d-flex flex-column flex-grow-1">
+
+                        <h4 th:text="${a.nomeAnimal}">
+                            Nome
+                        </h4>
+
+                        <p class="card-descricao"
+
+                           th:text="${a.descricao != null ?
+                           #strings.abbreviate(a.descricao, 90) :
+                           'Sem descrição disponível.'}">
+
+                            Descrição breve
+
+                        </p>
+
+                        <p th:text="${a.statusAdocao.descricao}"
+
+                           class="fw-bold mt-auto"
+
+                           th:classappend="${a.statusAdocao.name() == 'RETIRADA' ? 'text-danger' :
+                           (a.statusAdocao.name() == 'AGUARDANDO' ? 'text-warning' :
+                           (a.statusAdocao.name() == 'CONCLUIDA' ? 'text-success' : 'text-info'))}">
+
+                        </p>
+
+                    </div>
+
+                    <!-- BOTÃO -->
+                    <a th:href="@{/adocao/home/detalhe/{id}(id=${a.id})}"
+                       class="btn-card-detalhes">
+
+                        Ver Detalhes
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- PAGINAÇÃO -->
+            <div class="paginacao-container">
+
+                <a th:if="${currentPage > 0}"
+
+                   th:href="@{/adocao/home(pagina=${currentPage - 1})}"
+
+                   class="btn-pag-seta">
+
+                    ◀ Anterior
+
+                </a>
+
+                <span class="texto-paginacao">
+
+                    Página
+                    <span th:text="${currentPage + 1}"></span>
+
+                    de
+
+                    <span th:text="${totalPages}"></span>
+
+                </span>
+
+                <a th:if="${currentPage + 1 < totalPages}"
+
+                   th:href="@{/adocao/home(pagina=${currentPage + 1})}"
+
+                   class="btn-pag-seta">
+
+                    Próxima ▶
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

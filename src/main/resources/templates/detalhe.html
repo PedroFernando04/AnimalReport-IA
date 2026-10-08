@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>AR - Detalhes da Denúncia</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="~{fragments/alerta :: alerta}"></div>
+
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="page-section">
+
+    <div class="container">
+
+        <!-- BOTÃO VOLTAR -->
+
+        <div class="mb-4">
+
+            <a th:href="@{${voltarPara}}"
+               class="btn btn-outline-light rounded-pill px-4 py-2">
+
+                ← Voltar para Lista
+
+            </a>
+
+        </div>
+
+        <!-- CARD PRINCIPAL -->
+
+        <div class="detail-page-card">
+
+            <!-- TOPO -->
+
+            <div class="text-center mb-5">
+
+                <h1 class="detail-page-title">
+                    Detalhes da Denúncia
+                </h1>
+
+                <p class="detail-page-subtitle">
+                    Informações completas sobre a denúncia registrada.
+                </p>
+
+            </div>
+
+            <div class="row g-5 align-items-start">
+
+                <!-- FOTO -->
+
+                <div class="col-lg-5">
+
+                    <div th:if="${denuncia.imagemUrl != null}"
+                         class="detail-image-wrapper">
+
+                        <img th:src="${denuncia.imagemUrl}"
+                             class="detail-image"
+                             alt="Foto do Animal">
+
+                    </div>
+
+                    <!-- BOTÃO ASSUMIR DENÚNCIA -->
+
+                    <div th:if="${usuarioLogado.tipoUsuario == 'Organizacao' && denuncia.organizacaoResponsavel == null}"
+                         class="mt-4 text-center">
+
+                        <form th:action="@{/denuncia/assumir/{id}(id=${denuncia.id})}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="btn btn-success btn-lg px-4 rounded-pill">
+
+                                <i class="bi bi-check-circle me-2"></i>
+                                Assumir Denúncia
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <div th:if="${denuncia.organizacaoResponsavel != null}"
+                         class="alert alert-success mt-4">
+
+                        <strong>Responsável:</strong>
+                        <span th:text="${denuncia.organizacaoResponsavel.nome}"></span>
+
+                    </div>
+
+                </div>
+
+                <!-- INFORMAÇÕES -->
+
+                <div class="col-lg-7">
+
+                    <div class="detail-info-card">
+
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+
+                            <h2 class="detail-section-title mb-0">
+                                Informações da Denúncia
+                            </h2>
+
+                            <span class="badge fs-6 px-3 py-2"
+                                  th:text="${denuncia.urgencia.descricao}"
+                                  th:classappend="${denuncia.urgencia.name() == 'EMERGENCIA' ? 'bg-danger' :
+                                  (denuncia.urgencia.name() == 'MUITO_URGENTE' ? 'bg-warning text-dark' :
+                                  (denuncia.urgencia.name() == 'URGENTE' ? 'bg-warning text-dark' :
+                                  (denuncia.urgencia.name() == 'POUCO_URGENTE' ? 'bg-success' :
+                                  (denuncia.urgencia.name() == 'NAO_URGENTE' ? 'bg-info text-dark' : 'bg-secondary'))))}">
+
+                                Urgência
+
+                            </span>
+
+                        </div>
+
+                        <!-- TIPO -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label form-label-custom">
+                                Tipo do Animal
+                            </label>
+
+                            <div class="detail-field">
+
+                                <span th:text="${denuncia.tipoAnimal.descricao}">
+                                    Tipo
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- DESCRIÇÃO -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label form-label-custom">
+                                Descrição
+                            </label>
+
+                            <div class="detail-description-box">
+
+                                <p class="mb-0"
+                                   th:text="${denuncia.descricao}">
+
+                                    Descrição detalhada aqui...
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- LOCALIZAÇÃO -->
+
+                        <div th:if="${!denuncia.denunciaRapida}">
+
+                            <hr class="detail-divider">
+
+                            <h3 class="detail-section-title mt-4 mb-4">
+                                Localização
+                            </h3>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label form-label-custom">
+                                        Estado
+                                    </label>
+
+                                    <div class="detail-field">
+                                        <span th:text="${denuncia.estado}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label form-label-custom">
+                                        Cidade
+                                    </label>
+
+                                    <div class="detail-field">
+                                        <span th:text="${denuncia.municipio}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label form-label-custom">
+                                        Bairro
+                                    </label>
+
+                                    <div class="detail-field">
+                                        <span th:text="${denuncia.bairro}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label form-label-custom">
+                                        CEP
+                                    </label>
+
+                                    <div class="detail-field">
+                                        <span th:text="${denuncia.cep}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <label class="form-label form-label-custom">
+                                        Rua
+                                    </label>
+
+                                    <div class="detail-field">
+                                        <span th:text="${denuncia.rua}"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <label class="form-label form-label-custom">
+                                        Ponto de Referência
+                                    </label>
+
+                                    <div class="detail-description-box small-box">
+
+                                        <p class="mb-0"
+                                           th:text="${denuncia.pontoRef}"></p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- CONTATO EMERGÊNCIA -->
+
+                        <div th:if="${denuncia.denunciaRapida}">
+
+                            <hr class="detail-divider">
+
+                            <h3 class="detail-section-title mt-4 mb-4">
+                                Contato
+                            </h3>
+
+                            <div class="detail-field">
+
+                                <span class="fw-bold"
+                                      th:text="${denuncia.contato}">
+
+                                    Contato
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
