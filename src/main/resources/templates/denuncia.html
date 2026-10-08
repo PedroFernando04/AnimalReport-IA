@@ -116,18 +116,7 @@
                 >
 
                 </textarea>
-                <p id="contador">2000 caracteres restantes</p>
-                <script>
-                    function atualizarContador() {
-                      const campo = document.getElementById('descricao');
-                      const contador = document.getElementById('contador');
-                      const limite = campo.getAttribute('maxlength');
-                      const digitados = campo.value.length;
-                      const restantes = limite - digitados;
 
-                      contador.textContent = `${restantes} caracteres restantes`;
-                    }
-                </script>
 
             </div>
 
