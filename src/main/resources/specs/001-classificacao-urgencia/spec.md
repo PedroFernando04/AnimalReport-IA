@@ -185,6 +185,7 @@ Q-001 a Q-010 são as questões do SPEC-01. Q-011 a Q-014 surgiram da leitura do
 - **Q-012:** Se a reclassificação na edição falhar e as regras forem inconclusivas, manter o nível anterior com revisão manual ou aplicar o nível padrão? — **Responsável:** PO — **Prazo:** antes de aprovar a spec
 - **Q-013:** Denúncias do `/urgente` ficam com origem em branco (tratadas como `USUARIO` nas telas) ou ganham uma origem própria, por exemplo "fixa"? — **Responsável:** PO e grupo — **Prazo:** antes do plano
 
+
 ## Decisões confirmadas
 
 Nenhuma até o momento.
